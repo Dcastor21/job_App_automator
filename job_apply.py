@@ -17,7 +17,7 @@ chrome_driver_path = "/Users/casto/chromedriver/chromedriver"
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 driver.get(site)
 
-sign_in = driver.find_element(By.ID, "session_key")
+sign_in = driver.find_element("id", "session_key")
 sign_in.click()
 email_field = driver.find_element("id", "username")
 email_field.send_keys(email)
