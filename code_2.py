@@ -7,8 +7,7 @@ from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service as chromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-options = Options()
-options.headless = True
+
 
 chrome_driver_path = "/Users/casto/chromedriver/chromedriver"
 driver = webdriver.Chrome(service=chromeService(ChromeDriverManager().install(), options=options))
