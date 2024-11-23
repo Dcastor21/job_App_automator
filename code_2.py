@@ -3,26 +3,23 @@ import time
 from selenium import webdriver
 from selenium.common import NoSuchElementException
 from selenium.webdriver import Keys
-# from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service as chromeService, Service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.chrome.service import Service as chromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-site = input("input linked in jobs website link: ")
-email = input("enter Linkedin Email: ")
-password = input(" Enter linked in password: ")
-# options = Options()
-# options.headless = False
+options = Options()
+options.headless = True
 
 chrome_driver_path = "/Users/casto/chromedriver/chromedriver"
-driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
-driver.get(site)
+driver = webdriver.Chrome(service=chromeService(ChromeDriverManager().install(), options=options))
+driver.get("https://www.linkedin.com/jobs")
 
-sign_in = driver.find_element("id", "session_key")
+sign_in = driver.find_element("id","session_key")
 sign_in.click()
-email_field = driver.find_element("id", "username")
-email_field.send_keys(email)
-pwd_field = driver.find_element("id", "password")
-pwd_field.send_keys(password)
+email_field = driver.find_element("id","username")
+email_field.send_keys("[ENTER YOUR EMAIL]")
+pwd_field = driver.find_element("id","password")
+pwd_field.send_keys("[ENTER YOUR PASSWORD]")
 pwd_field.send_keys(Keys.ENTER)
 
 all_listings = driver.find_elements("css", "job-card-Container--Clickable")
@@ -50,7 +47,7 @@ for listing in all_listings:
         time.sleep(2)
         review_button = driver.find_element("clas_name", "artdeco-button--primary")
         if review_button.get_attribute("data-control-name") == "continue_unify":
-            close_bttn = driver.find_element("class_name", "artdeco-model__dismiss")
+            close_bttn =driver.find_element("class_name", "artdeco-model__dismiss")
             close_bttn.click()
             discard_buttn = driver.find_element("class_name", "artdeco-modal__comfirm-dialog-btn")[1]
             discard_buttn.click()
@@ -75,5 +72,6 @@ for listing in all_listings:
     except NoSuchElementException:
         print("No application Button, skipped.")
         continue
+
 
 # driver.close()
